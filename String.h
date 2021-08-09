@@ -438,16 +438,16 @@ namespace AK {
 
             switch(num_holder)
             {
-                case 0: encoded_string = 'A'; break;
-                case 1: encoded_string = 'B'; break;
-                case 2: encoded_string = 'C'; break;
-                case 3: encoded_string = 'D'; break;
-                case 4: encoded_string = 'E'; break;
-                case 5: encoded_string = 'F'; break;
-                case 6: encoded_string = 'G'; break;
-                case 7: encoded_string = 'H'; break;
-                case 8: encoded_string = 'I'; break;
-                case 9: encoded_string = 'J'; break;
+                case 0:  encoded_string = 'A'; break;
+                case 1:  encoded_string = 'B'; break;
+                case 2:  encoded_string = 'C'; break;
+                case 3:  encoded_string = 'D'; break;
+                case 4:  encoded_string = 'E'; break;
+                case 5:  encoded_string = 'F'; break;
+                case 6:  encoded_string = 'G'; break;
+                case 7:  encoded_string = 'H'; break;
+                case 8:  encoded_string = 'I'; break;
+                case 9:  encoded_string = 'J'; break;
                 case 10: encoded_string = 'K'; break;
                 case 11: encoded_string = 'L'; break;
                 case 12: encoded_string = 'M'; break;
