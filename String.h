@@ -5,7 +5,7 @@
 #include <iostream>
 #include <vector>
 #include <math.h>
- 
+
 namespace AK {
 
 	class String
@@ -852,6 +852,121 @@ namespace AK {
 		{
 			is >> string.str;
 			return is;
+		}
+
+		friend String operator ! (String str)
+		{
+            String ret;
+
+            for (size_t i = 0; i < str.length(); i++)
+            {
+                ret += (unsigned char) (!((unsigned char) str[i]));
+            }
+
+            return ret;
+		}
+
+		friend String operator ~ (String str)
+		{
+            String ret;
+
+            for (size_t i = 0; i < str.length(); i++)
+            {
+                ret += (unsigned char) (~((unsigned char) str[i]));
+            }
+
+            return ret;
+		}
+
+		friend String operator & (String str, unsigned int val)
+		{
+            String ret;
+
+            for (size_t i = 0; i < str.length(); i++)
+            {
+                ret += (unsigned char) ((unsigned char) str[i] & val);
+            }
+
+            return ret;
+		}
+
+		friend String operator | (String str, unsigned int val)
+		{
+            String ret;
+
+            for (size_t i = 0; i < str.length(); i++)
+            {
+                ret += (unsigned char) ((unsigned char) str[i] | val);
+            }
+
+            return ret;
+		}
+
+		friend String operator ^ (String str, unsigned int val)
+		{
+            String ret;
+
+            for (size_t i = 0; i < str.length(); i++)
+            {
+                ret += (unsigned char) ((unsigned char) str[i] ^ val);
+            }
+
+            return ret;
+		}
+
+		friend String operator << (String str, unsigned int val)
+		{
+            String ret = str;
+
+            int carry = 0;
+            unsigned int holder = val;
+
+            while (holder--)
+            {
+                for (size_t i = 0; i < str.length(); i++)
+                {
+                    //carry = (( ret[i] << 1) & (1 << 7));
+
+                    //ret.replace(i, (char) ((ret[i] << 1)|(ret[i] >> (8 - 1))));
+                    carry = (ret[i] & 128);
+
+                    ret.replace(i, ((ret[i] << 1) | (carry >> 7)));
+                }
+            }
+
+            return ret;
+		}
+
+
+		friend String operator >> (String str, unsigned int val)
+		{
+            String ret = str;
+
+            int carry = 0;
+            unsigned int holder = val;
+
+            while (holder--)
+            {
+                for (size_t i = 0; i < str.length(); i++)
+                {
+                    // set a bit by doing: number |= 1 << x or bit = number | (1 << x)
+                    // clear a bit by doing: number &= ~(1 << x) or bit = number & (~(1 << x))
+                    // toggle a bit by doing: number ^= 1 << x or bit = number ^ (1 << x)
+
+                    //carry = (((unsigned char) ret[i] >> 1) & 1);
+
+                    //int left = (((unsigned char) ret[i] << 1) | (unsigned char) ret[i] >> (8 - 1)) & 0xFF; // 16 bit aka 2 byte shift operation
+                    //int right =(((unsigned char) ret[i] >> 1) | (unsigned char) ret[i] << (8 - 1)) & 0xFF; // 16 bit aka 2 byte shift operation
+
+                    //ret.replace(i, (char)(((ret[i] >> 1)|(ret[i] << (8 - 1)))));
+
+                    carry = (ret[i] & 1);
+
+                    ret.replace(i, ((ret[i] >> 1) | (carry << 7)));
+                }
+            }
+
+            return ret;
 		}
 	};
 }
