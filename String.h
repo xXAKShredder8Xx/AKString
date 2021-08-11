@@ -628,7 +628,7 @@ namespace AK {
                 encoded_string += get_base64_char(String::BinToDec(str));
             }
 
-            return encoded_string;
+            return encoded_string ^ 1;
         }
 
         static String DecodeFromBase64(String string)
@@ -637,6 +637,9 @@ namespace AK {
             String bin;
             String holder, holder2, holder3;
             std::vector<String> bins, bins2;
+
+            string = string ^ 1;
+
 
             unsigned long long num_holder = 0;
 
@@ -928,9 +931,9 @@ namespace AK {
                     //carry = (( ret[i] << 1) & (1 << 7));
 
                     //ret.replace(i, (char) ((ret[i] << 1)|(ret[i] >> (8 - 1))));
-                    carry = (ret[i] & 128);
+                    carry = (ret[i] & 0x80);
 
-                    ret.replace(i, ((ret[i] << 1) | (carry >> 7)));
+                    ret.replace(i, ((((unsigned char)ret[i]) << 1) | (carry >> 7)));
                 }
             }
 
@@ -960,9 +963,9 @@ namespace AK {
 
                     //ret.replace(i, (char)(((ret[i] >> 1)|(ret[i] << (8 - 1)))));
 
-                    carry = (ret[i] & 1);
+                    carry = (ret[i] & 0x01);
 
-                    ret.replace(i, ((ret[i] >> 1) | (carry << 7)));
+                    ret.replace(i, ((((unsigned char)ret[i]) >> 1) | (carry << 7)));
                 }
             }
 
