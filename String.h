@@ -6,6 +6,8 @@
 #include <vector>
 #include <math.h>
 
+#define COMMENT(x) /* x */
+
 namespace AK {
 
 	class String
@@ -74,12 +76,21 @@ namespace AK {
 		{
 		    String ret;
 
-            for (size_t i = start; i <= end; i++)
+            for (size_t i = start; i < end; i++)
             {
                 ret += str[i];
             }
 
 			return ret;
+		}
+
+		String substr(size_t start, size_t end)
+		{
+            String ret;
+
+            ret = str.substr(start, end);
+
+            return ret;
 		}
 
 		static String format(String format, std::vector<String> args)
@@ -675,6 +686,22 @@ namespace AK {
             return encoded_string;
         }
 
+        std::vector<String> split(String splitter_)
+        {
+            std::vector<String> ret;
+            String holder = copy();
+            size_t pos = 0;
+            String token;
+            while ((pos = holder.indexOf(splitter_)) != -1) {
+                token = holder.substr(0, pos);
+                ret.push_back(token);
+                holder.erase(0, pos + splitter_.length());
+            }
+            ret.push_back(holder);
+
+            return ret;
+        }
+
 		size_t indexOf(String string)
 		{
 			if (str.find(string.str) != (size_t)-1)
@@ -714,6 +741,12 @@ namespace AK {
 			ss << this << string;
 			return ss.str().c_str();
 		}
+
+		String erase(size_t start, size_t end)
+        {
+            str.erase(start, end);
+            return this;
+        }
 
 		String remove(String string)
 		{
